@@ -27,8 +27,11 @@ yarn-error.log*
 .env.test.local
 .env.production.local   
 
-# vercel
+# vercel (removed — deploy on Render)
 .vercel
+
+# render
+.render
 
 # typescript
 *.tsbuildinfo

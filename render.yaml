@@ -1,30 +1,50 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+
 services:
   - type: web
     name: internmatch
     runtime: node
     plan: free
     region: oregon
+    repo: https://github.com/Rabia-26/Internmatch
     branch: main
-    buildCommand: npx pnpm install && npx pnpm build
-    startCommand: npx pnpm start
+    buildCommand: corepack enable && pnpm install && pnpm build
+    startCommand: pnpm start
+    healthCheckPath: /
     envVars:
       - key: NODE_ENV
         value: production
       - key: NEXT_TELEMETRY_DISABLED
         value: "1"
-      - key: TINYFISH_API_KEY
-        value: ""
-      - key: OCR_API_URL
-        value: ""
+      - key: GROQ_MODEL
+        value: openai/gpt-oss-20b
       - key: GROQ_API_KEY
-        value: ""
+        sync: false
       - key: SUPABASE_URL
-        value: ""
+        sync: false
       - key: SUPABASE_SERVICE_ROLE_KEY
-        value: ""
+        sync: false
+      - key: NEXT_PUBLIC_APP_URL
+        sync: false
+      - key: OCR_API_URL
+        sync: false
       - key: QSTASH_TOKEN
-        value: ""
+        sync: false
       - key: QSTASH_CURRENT_SIGNING_KEY
-        value: ""
+        sync: false
       - key: QSTASH_NEXT_SIGNING_KEY
-        value: ""
+        sync: false
+
+  - type: web
+    name: internmatch-ocr
+    runtime: python
+    plan: free
+    region: oregon
+    repo: https://github.com/Rabia-26/Internmatch
+    branch: main
+    rootDir: ocr_api
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"

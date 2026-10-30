@@ -22,7 +22,6 @@ import {
   SiTypescript,
   SiTailwindcss,
   SiRender,
-  SiVercel,
 } from "react-icons/si";
 import { COLORS } from "@/lib/theme";
 
@@ -34,7 +33,6 @@ const TECH_LOGOS = [
   { node: <SiPostgresql />, title: "PostgreSQL" },
   { node: <SiTailwindcss />, title: "Tailwind" },
   { node: <SiRender />, title: "Render" },
-  { node: <SiVercel />, title: "Vercel" },
 ];
 
 const HOW_IT_WORKS = [

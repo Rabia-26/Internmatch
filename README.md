@@ -135,7 +135,27 @@ Open [http://localhost:3000](http://localhost:3000) → **Get Started** → subm
 
 ---
 
+## Deploy on Render
 
+Blueprint file: **`render.yaml`** (Next.js app + optional OCR service).
+
+1. Ensure code is on **`main`**: [github.com/Rabia-26/Internmatch](https://github.com/Rabia-26/Internmatch)
+2. [Render Dashboard](https://dashboard.render.com) → **New** → **Blueprint** → select the repo.
+3. Set secrets when prompted:
+
+   | Variable | Service | Notes |
+   |----------|---------|--------|
+   | `GROQ_API_KEY` | internmatch | Required |
+   | `SUPABASE_URL` | internmatch | Required |
+   | `SUPABASE_SERVICE_ROLE_KEY` | internmatch | Required |
+   | `NEXT_PUBLIC_APP_URL` | internmatch | e.g. `https://internmatch.onrender.com` |
+   | `OCR_API_URL` | internmatch | Optional: `https://internmatch-ocr.onrender.com/extract` |
+
+4. Redeploy after env vars are set. Apply Supabase schema if not already done.
+
+Free tier may sleep when idle; first load can be slow. Tesseract on Render OCR may need extra config—text PDFs work without OCR.
+
+---
 
 ## Tech stack
 
@@ -143,6 +163,7 @@ Open [http://localhost:3000](http://localhost:3000) → **Get Started** → subm
 - **Groq** — keyword extraction  
 - **Supabase** — jobs storage  
 - **FastAPI + Tesseract/PyMuPDF** — OCR microservice  
+- **Render** — production hosting (Blueprint in `render.yaml`)
 - **Custom scraper** — Internshala HTML, LinkedIn guest listings, Wellfound, Naukri
 
 ---
