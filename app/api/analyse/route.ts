@@ -26,6 +26,36 @@ function getQStashClient() {
   return new Client({ token });
 }
 
+/** Public URL for QStash callbacks (Render sets RENDER_EXTERNAL_URL). */
+function getPublicBaseUrl(): string {
+  const explicit = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "");
+  if (explicit) return explicit;
+  const render = process.env.RENDER_EXTERNAL_URL?.replace(/\/$/, "");
+  if (render) return render;
+  const vercel = process.env.VERCEL_URL;
+  if (vercel) return `https://${vercel}`;
+  return "http://localhost:3000";
+}
+
+async function runInternMatchInBackground(
+  jobId: string,
+  params: Parameters<typeof processInternMatch>[1],
+) {
+  processInternMatch(jobId, params).catch(async (err) => {
+    logger.error(`Job ${jobId} failed:`, err);
+    try {
+      await updateJob(jobId, {
+        status: "failed",
+        stage: "failed",
+        error: err instanceof Error ? err.message : "Processing failed",
+        failed_at: new Date().toISOString(),
+      });
+    } catch (e) {
+      logger.error(`Failed to persist failure for job ${jobId}:`, e);
+    }
+  });
+}
+
 // 5 upload requests per 60s per IP (per server instance).
 const limiter = new RateLimiterMemory({ points: 5, duration: 60 });
 
@@ -176,9 +206,7 @@ export async function POST(req: Request) {
     // Publish QStash message to trigger processing, or fall back to sync.
     const qstash = getQStashClient();
     if (qstash && canUseQueuedProcessing) {
-      const baseUrl = process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+      const baseUrl = getPublicBaseUrl();
 
       try {
         await qstash.publishJSON({
@@ -204,23 +232,11 @@ export async function POST(req: Request) {
       logger.warn(
         `[ANALYSE] QStash not configured, falling back to sync processing for ${jobId}`,
       );
-      processInternMatch(jobId, {
+      void runInternMatchInBackground(jobId, {
         roleFit,
         location,
         manualKeywords,
         resumeFile: resume,
-      }).catch(async (err) => {
-        logger.error(`Job ${jobId} failed:`, err);
-        try {
-          await updateJob(jobId, {
-            status: "failed",
-            stage: "failed",
-            error: err?.message ?? "Processing failed",
-            failed_at: new Date().toISOString(),
-          });
-        } catch (e) {
-          logger.error(`Failed to persist failure for job ${jobId}:`, e);
-        }
       });
     }
 

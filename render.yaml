@@ -8,10 +8,12 @@ services:
     region: oregon
     repo: https://github.com/Rabia-26/Internmatch
     branch: main
-    buildCommand: corepack enable && pnpm install && pnpm build
-    startCommand: pnpm start
+    buildCommand: npm install -g pnpm@9 && pnpm install --frozen-lockfile && pnpm build
+    startCommand: npm start
     healthCheckPath: /
     envVars:
+      - key: NODE_VERSION
+        value: "20"
       - key: NODE_ENV
         value: production
       - key: NEXT_TELEMETRY_DISABLED
@@ -27,12 +29,6 @@ services:
       - key: NEXT_PUBLIC_APP_URL
         sync: false
       - key: OCR_API_URL
-        sync: false
-      - key: QSTASH_TOKEN
-        sync: false
-      - key: QSTASH_CURRENT_SIGNING_KEY
-        sync: false
-      - key: QSTASH_NEXT_SIGNING_KEY
         sync: false
 
   - type: web
