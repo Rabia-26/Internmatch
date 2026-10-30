@@ -1,0 +1,15 @@
+allowBuilds:
+  esbuild: true
+  faiss-node: set this to true or false
+  ngrok: set this to true or false
+  protobufjs: set this to true or false
+  sharp: set this to true or false
+
+onlyBuiltDependencies:
+  - esbuild
+  - faiss-node
+  - protobufjs
+  - sharp
+
+overrides:
+  sharp: ^0.33.5

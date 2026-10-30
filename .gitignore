@@ -1,0 +1,48 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+node_modules/
+*/node_modules/
+ngrok.yml
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files
+.env*
+!.env.example
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local   
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# python
+ocr_api/.venv/
+__pycache__/
+*.pyc
+
+.DS_Store
+
+# legacy duplicate (nested git repo)
+WatchDoc/
+
+# clerk configuration (can include secrets)
+/.clerk/

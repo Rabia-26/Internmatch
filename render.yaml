@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: internmatch
+    runtime: node
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: npx pnpm install && npx pnpm build
+    startCommand: npx pnpm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+      - key: TINYFISH_API_KEY
+        value: ""
+      - key: OCR_API_URL
+        value: ""
+      - key: GROQ_API_KEY
+        value: ""
+      - key: SUPABASE_URL
+        value: ""
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        value: ""
+      - key: QSTASH_TOKEN
+        value: ""
+      - key: QSTASH_CURRENT_SIGNING_KEY
+        value: ""
+      - key: QSTASH_NEXT_SIGNING_KEY
+        value: ""

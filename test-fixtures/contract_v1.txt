@@ -1,0 +1,27 @@
+SERVICE AGREEMENT - VERSION 1.0
+Effective Date: January 1, 2025
+
+1. PAYMENT TERMS
+   Payment must be made within 30 days for domestic orders.
+   International orders require payment within 45 days.
+   Late payments incur a fee of 5% per month.
+
+2. LIABILITY
+   The contractor's liability is capped at $100,000 for normal claims.
+   Liability for willful misconduct is unlimited.
+
+3. WARRANTY
+   The warranty period is 1 year for the basic license.
+   Premium licenses include a 3-year warranty.
+
+4. TERMINATION
+   Either party may terminate with 30 days written notice.
+   The customer must return all confidential materials upon termination.
+
+5. CONFIDENTIALITY
+   All technical documentation is considered confidential.
+   The contractor shall not disclose customer data to third parties.
+
+6. DATA RETENTION
+   Customer data must be retained for 5 years after termination.
+   Personal data shall be deleted within 90 days of a deletion request.
